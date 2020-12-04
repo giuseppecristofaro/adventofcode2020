@@ -7,12 +7,12 @@ def read(filename):
         data = f.read().split("\n\n")
     return data
     
-def count(data):
-    check = 0
+def check(data):
+    count = 0
     for item in data:
-        check += not fields - set(re.sub(r":[a-zA-Z0-9#]+|cid","", item).split())
-    return check
+        count += not fields - set(re.sub(r":[a-zA-Z0-9#]+|cid","", item).split())
+    return count
     
 data = read("input4.txt")
-check = count(data)
-print(check)
+count = check(data)
+print(count)
