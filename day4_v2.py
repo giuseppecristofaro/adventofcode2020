@@ -44,8 +44,7 @@ def count(data):
         item_ = '{"' + item.replace(':', '":"').replace(' ', '","') + '"}'.replace(' ', '')
         item_dict = json.loads(item_)
         check += not fields - set(re.sub(r":[a-zA-Z0-9#]+|cid","", item).split())
-        if check_all(item_dict):
-            check2 += 1
+        check2 += check_all(item_dict)
     return check, check2
     
 data = read("input4.txt")
