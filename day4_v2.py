@@ -1,4 +1,4 @@
-import re
+import re, json
 
 fields, eyes = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}, {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"}
 
@@ -37,13 +37,17 @@ def check_all(item):
     except Exception as e:
         return False
 
+def generate_dict(item):
+    item_dict = {}
+    for i in item.split():
+        key, value = i.split(":")
+        item_dict[key] = value
+    return item_dict
+
 def check(data):
     count, count2 = 0, 0
     for item in data:
-        item_dict = {}
-        for i in item.split():
-            key, value = i.split(":")
-            item_dict[key] = value
+        item_dict = generate_dict(item)
         count += not fields - set(re.sub(r":[a-zA-Z0-9#]+|cid","", item).split())
         count2 += check_all(item_dict)
     return count, count2
