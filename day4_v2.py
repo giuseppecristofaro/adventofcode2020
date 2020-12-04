@@ -5,7 +5,6 @@ fields, eyes = {"byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"}, {"amb", "blu",
 def read(filename):
     with open(filename, "r") as f:
         data = [i.replace("\n", " ").strip() for i in f.read().split("\n\n")]
-        #data = f.read().split("\n\n")
     return data
 
 def check_range(item, start, end):
@@ -38,16 +37,14 @@ def check_all(item):
     except Exception as e:
         return False
 
-def count(data):
-    check, check2 = 0, 0
+def check(data):
+    count, count2 = 0, 0
     for item in data:
-        item_ = '{"' + item.replace(':', '":"').replace(' ', '","') + '"}'.replace(' ', '')
-        item_dict = json.loads(item_)
-        check += not fields - set(re.sub(r":[a-zA-Z0-9#]+|cid","", item).split())
-        check2 += check_all(item_dict)
-    return check, check2
+        item_dict = json.loads('{"%s"}' % item.replace(':', '":"').replace(' ', '","'))
+        count += not fields - set(re.sub(r":[a-zA-Z0-9#]+|cid","", item).split())
+        count2 += check_all(item_dict)
+    return count, count2
     
 data = read("input4.txt")
-check, check2 = count(data)
-print(check, check2)
-
+count, count2 = check(data)
+print(count, count2)
