@@ -14,3 +14,4 @@ def count(data):
 data = read("input6.txt")
 c1, c2 = count(data)
 print("count_1:", c1, "count_2:", c2)
+
